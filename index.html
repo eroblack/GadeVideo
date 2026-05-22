@@ -1,89 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistèm Gayan Eroblack</title>
     <style>
-        body { background-color: #000; color: white; text-align: center; font-family: sans-serif; margin: 0; }
-        .video-container { width: 100vw; height: 80vh; background: #000; }
-        iframe { width: 100%; height: 100%; border: none; }
-        .stats { padding: 10px; background: #222; }
-        button { 
-            padding: 15px 30px; font-size: 18px; margin-top: 10px; 
-            background: #28a745; color: white; border: none; border-radius: 5px; 
-            cursor: pointer;
-        }
-        button:disabled { background: #555; }
+        body { font-family: sans-serif; text-align: center; background-color: #000; color: #fff; }
+        .btn-boost { padding: 15px 30px; background: red; color: white; border: none; border-radius: 5px; font-size: 18px; }
     </style>
 </head>
 <body>
 
-<div class="video-container">
-    <iframe id="myVideo" src="https://streamable.com/e/za8zmt?autoplay=1&nocontrols=1" allow="autoplay"></iframe>
-</div>
+    <h2>Sistèm Gid Videyo</h2>
+    <div id="display">Goud: 0.00</div>
 
-<div class="stats">
-    <p>Santim: <span id="displayCentime">0</span>/100</p>
-    <button id="btnPlay" onclick="restartVideo()">Replay pou genyen</button>
-</div>
+    <script>
+        let totalSantim = 0;
 
-<script>
-    let centimes = 0;
-    let videoFinished = false;
-    const iframe = document.getElementById('myVideo');
-    const btnPlay = document.getElementById('btnPlay');
-    const display = document.getElementById('displayCentime');
+        // Fonksyon sa a ap kouri chak fwa moun nan fini gade videyo a
+        function ajoutePwenApreVideo() {
+            // Nou ajoute santim yo (egzanp: 25 santim chak fwa)
+            totalSantim += 25; 
 
-    // Fonksyon pou koute lè videyo a fini
-    // Remak: Streamable voye mesaj via postMessage
-    window.addEventListener('message', function(event) {
-        // Nou tcheke si mesaj la di videyo a fini
-        if (event.data === 'onVideoComplete' || (event.data.method === 'onVideoComplete')) {
-            processReward();
-        }
-    });
-
-    // simulation si iframe la pa voye mesaj la dirèkteman (fallback)
-    // Nan anpil aplikasyon WebView, nou ka detekte sa pi byen toujou
-    function processReward() {
-        if (!videoFinished) {
-            centimes++;
-            videoFinished = true;
-            btnPlay.disabled = false; // Moun nan ka klike sou play kounye a
+            // Kalkile goud ak rès santim
+            let goud = Math.floor(totalSantim / 100);
+            let rèsSantim = totalSantim % 100;
             
-            updateSystem();
-        }
-    }
+            // Fòmate montan an (ex: 1.25)
+            let montanFinal = goud + (rèsSantim / 100);
+            let reziltaFòmate = montanFinal.toFixed(2);
 
-    function updateSystem() {
-        display.innerText = centimes;
+            // Montre l nan paj la
+            document.getElementById("display").innerText = "Goud: " + reziltaFòmate;
 
-        // 1. Mete santim nan nan edittextGenyen (via Android Interface si w nan Sketchware)
-        if(window.Android) {
-            window.Android.updateGenyen(centimes);
-        }
-
-        // 2. Si li rive 100, li fè 1 Goud, li voye l nan Peye
-        if (centimes >= 100) {
-            centimes = 0;
-            display.innerText = "0";
-            if(window.Android) {
-                window.Android.transferToPeye(1);
-            } else {
-                alert("Ou fè 1 Goud! Sistèm nan voye l nan balans Peye ou.");
+            // VOYE REZILTA A NAN SKETCHWARE
+            // Li pral frape edittextGenyen ou an jan ou te mande a
+            if (window.SketchwareInterface) {
+                SketchwareInterface.voyeKòb(reziltaFòmate);
             }
         }
-    }
 
-    function restartVideo() {
-        // Reload iframe la pou l ka jwe ankò
-        const currentSrc = iframe.src;
-        iframe.src = "";
-        iframe.src = currentSrc;
-        
-        videoFinished = false;
-        btnPlay.disabled = true; // Bloke bouton an pandan l ap gade
-    }
-</script>
+        // Similasyon: Deklanche fonksyon an lè videyo a fini
+        // Nan pwojè w la, mete "ajoutePwenApreVideo()" nan event 'ended' videyo a
+    </script>
 
 </body>
 </html>
