@@ -20,22 +20,20 @@
         <div id="player"></div>
     </div>
     
-    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 50 HTG)</button>
+    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 50 santim)</button>
 
     <script>
         let totalGoud = 0;
         const videoID = 'RoAtML-fDSI'; 
 
-        // FONKSYON SENDTOAPP LA (Egzakteman jan l ye nan Roulèt la)
         function sendToApp(bwat, val) {
-            // Nou eseye de (2) fason yo pou nou sèten li frape Sketchware
+            // Pon pou Sketchware
             if (window.Android) { 
                 window.Android.voyeKòb(bwat, val.toString()); 
             }
             if (window.SketchwareInterface) {
                 window.SketchwareInterface.voyeKòb(bwat + ":" + val);
             }
-            console.log("Voye nan " + bwat + ": " + val);
         }
 
         var tag = document.createElement('script');
@@ -54,15 +52,23 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                totalGoud += 0.50; // Ajoute 50 santim
+                // Chak videyo bay 0.50
+                totalGoud += 0.50; 
                 let rezilta = totalGoud.toFixed(2);
                 
                 document.getElementById("balance").innerText = rezilta;
                 document.getElementById('replayBtn').style.display = 'block';
 
-                // NOU FRAРЕ DE (2) BWAT YO DIRÈKTEMAN
-                sendToApp("peye", rezilta);
-                sendToApp("genyen", rezilta);
+                // KONDISYON: Se sèlman si li rive nan 1.00 (oswa plis)
+                // l ap voye "1" nan edittextGenyen
+                if (totalGoud >= 1.00) {
+                    // Nou voye chif 1 an sèlman nan edittextGenyen
+                    sendToApp("genyen", "1");
+                    
+                    // Si w vle li rekòmanse nan 0 apre l fin voye 1 an, 
+                    // ou mèt dekomante liy anba a:
+                    // totalGoud = 0; 
+                }
             }
         }
 
