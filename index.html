@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eroblack Video System</title>
+    <title>Eroblack Test System</title>
     <style>
         body { background-color: #000; color: white; text-align: center; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         .stats { padding: 15px; font-size: 22px; background: #1a1a1a; border-bottom: 3px solid #ed1c24; font-weight: bold; }
         .video-wrapper { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; background: #000; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         #balance { color: #00ff00; }
+        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background-color: #ed1c24; color: white; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -19,27 +20,13 @@
     <div class="video-wrapper">
         <div id="player"></div>
     </div>
+    
+    <button id="replayBtn" onclick="replayVideo()">REPLAY (Pou fè 50 santim ankò)</button>
 
     <script>
-        // Lojik pou jere santim ak goud
         let totalSantim = 0;
-        let currentVideoIndex = 0;
+        const videoID = 'RoAtML-fDSI'; 
 
-        // Lis 10 videyo YouTube (Ou ka ajoute plis toujou la a)
-        const videoList = [
-            'RoAtML-fDSI', // Videyo 1
-            'vtxrwhcRCZI', // Videyo 2
-            'm5W_vXv3i90', // Videyo 3
-            '3HhV_m6S9vA', // Videyo 4
-            'W2X_5_lG_G8', // Videyo 5
-            '9bX7Y1V6Yp0', // Videyo 6
-            'L_X5G2v1YwQ', // Videyo 7
-            'K_R9v2X3YmP', // Videyo 8
-            'J_S1v4X5YnL', // Videyo 9
-            'H_T2v6X7YkM'  // Videyo 10
-        ];
-
-        // Chaje API YouTube la
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -50,12 +37,11 @@
             player = new YT.Player('player', {
                 height: '100%',
                 width: '100%',
-                videoId: videoList[currentVideoIndex],
+                videoId: videoID,
                 playerVars: {
                     'autoplay': 1,
                     'controls': 1,
-                    'rel': 0,
-                    'modestbranding': 1
+                    'rel': 0
                 },
                 events: {
                     'onStateChange': onPlayerStateChange
@@ -63,40 +49,32 @@
             });
         }
 
-        // Lè yon videyo fini
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
                 ajouteKredi();
-                jwePwochenVideo();
+                document.getElementById('replayBtn').style.display = 'block';
             }
         }
 
         function ajouteKredi() {
-            // Nou ajoute 1 santim (0.01)
-            totalSantim += 1; 
+            // NOU METE L SOU 50 SANTIM POU TEST LA
+            totalSantim += 50; 
             
-            // Konvèti 100 santim an 1 goud otomatikman
+            // Konvèti an goud (Egzanp: 50 santim = 0.50)
             let montanFinal = (totalSantim / 100).toFixed(2);
             
-            // Mizajou nan HTML la
             document.getElementById("balance").innerText = montanFinal;
 
-            // VOYE NAN SKETCHWARE (Frape edittextGenyen ak edittextPeye)
+            // VOYAJE NAN SKETCHWARE
             if (window.SketchwareInterface) {
+                // Sa ap frape edittextGenyen ak edittextPeye
                 SketchwareInterface.voyeKòb(montanFinal);
             }
         }
 
-        function jwePwochenVideo() {
-            currentVideoIndex++;
-            // Si gen videyo toujou nan lis la, nou jwe pwochen an
-            if (currentVideoIndex < videoList.length) {
-                player.loadVideoById(videoList[currentVideoIndex]);
-            } else {
-                // Si tout fini, nou tounen nan premye videyo a
-                currentVideoIndex = 0;
-                player.loadVideoById(videoList[currentVideoIndex]);
-            }
+        function replayVideo() {
+            player.playVideo();
+            document.getElementById('replayBtn').style.display = 'none';
         }
     </script>
 </body>
