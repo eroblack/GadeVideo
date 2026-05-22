@@ -20,14 +20,13 @@
         <div id="player"></div>
     </div>
     
-    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 50 santim)</button>
+    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 1 santim)</button>
 
     <script>
         let totalGoud = 0;
         const videoID = 'RoAtML-fDSI'; 
 
         function sendToApp(bwat, val) {
-            // Pon pou Sketchware
             if (window.Android) { 
                 window.Android.voyeKòb(bwat, val.toString()); 
             }
@@ -52,21 +51,21 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                // Chak videyo bay 0.50
-                totalGoud += 0.50; 
-                let rezilta = totalGoud.toFixed(2);
+                // NOU AJOUTE 1 SANTIM (0.01)
+                totalGoud += 0.01; 
                 
-                document.getElementById("balance").innerText = rezilta;
+                // Nou itilize toFixed(2) pou asire 0.01, 0.02, elatriye parèt byen
+                let reziltaDisplay = totalGoud.toFixed(2);
+                
+                document.getElementById("balance").innerText = reziltaDisplay;
                 document.getElementById('replayBtn').style.display = 'block';
 
-                // KONDISYON: Se sèlman si li rive nan 1.00 (oswa plis)
-                // l ap voye "1" nan edittextGenyen
+                // SI KÒB LA RIVE NAN 1.00 (Sa vle di 100 videyo)
+                // Nou voye 1 nan edittextGenyen sèlman
                 if (totalGoud >= 1.00) {
-                    // Nou voye chif 1 an sèlman nan edittextGenyen
                     sendToApp("genyen", "1");
                     
-                    // Si w vle li rekòmanse nan 0 apre l fin voye 1 an, 
-                    // ou mèt dekomante liy anba a:
+                    // Nou ka reset totalGoud la si nou vle moun nan rekòmanse nan 0
                     // totalGoud = 0; 
                 }
             }
