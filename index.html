@@ -1,48 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistèm Gayan Eroblack</title>
+    <title>Eroblack Game System</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background-color: #000; color: #fff; }
-        .btn-boost { padding: 15px 30px; background: red; color: white; border: none; border-radius: 5px; font-size: 18px; }
+        body { background-color: #000; color: #fff; text-align: center; font-family: Arial; }
+        .score-box { font-size: 24px; margin-top: 20px; color: #00ff00; }
+        #video-container { width: 100%; max-width: 500px; margin: auto; }
     </style>
 </head>
 <body>
 
-    <h2>Sistèm Gid Videyo</h2>
-    <div id="display">Goud: 0.00</div>
+    <div class="score-box">Goud Ganyen: <span id="displayGoud">0.00</span></div>
 
     <script>
+        // Nou itilize yon sèl varyab pou tout santim yo
         let totalSantim = 0;
 
-        // Fonksyon sa a ap kouri chak fwa moun nan fini gade videyo a
-        function ajoutePwenApreVideo() {
-            // Nou ajoute santim yo (egzanp: 25 santim chak fwa)
-            totalSantim += 25; 
+        // Fonksyon sa a ap kouri chak fwa yon aksyon fini (ex: videyo fini)
+        function kalkileEpiVoye(kantiteSantim) {
+            // 1. Nou ajoute santim yo
+            totalSantim += kantiteSantim;
 
-            // Kalkile goud ak rès santim
-            let goud = Math.floor(totalSantim / 100);
-            let rèsSantim = totalSantim % 100;
-            
-            // Fòmate montan an (ex: 1.25)
-            let montanFinal = goud + (rèsSantim / 100);
-            let reziltaFòmate = montanFinal.toFixed(2);
+            // 2. Nou konvèti yo an fòma 0.00 (Sa jere 100 santim = 1 goud la otomatikman)
+            let reziltaFinal = (totalSantim / 100).toFixed(2);
 
-            // Montre l nan paj la
-            document.getElementById("display").innerText = "Goud: " + reziltaFòmate;
+            // 3. Montre l sou ekran HTML la
+            document.getElementById("displayGoud").innerText = reziltaFinal;
 
-            // VOYE REZILTA A NAN SKETCHWARE
-            // Li pral frape edittextGenyen ou an jan ou te mande a
+            // 4. FRAPE SKETCHWARE: Voye valè a nan edittextGenyen
             if (window.SketchwareInterface) {
-                SketchwareInterface.voyeKòb(reziltaFòmate);
+                // Nou voye montan an bay Sketchware
+                SketchwareInterface.voyeKòb(reziltaFinal);
             }
         }
 
-        // Similasyon: Deklanche fonksyon an lè videyo a fini
-        // Nan pwojè w la, mete "ajoutePwenApreVideo()" nan event 'ended' videyo a
+        // EGZANP: Si w vle ajoute 50 santim chak fwa yon videyo fini
+        // kalkileEpiVoye(50); 
     </script>
-
 </body>
 </html>
