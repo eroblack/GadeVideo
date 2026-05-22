@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eroblack Fix System</title>
+    <title>Eroblack Final Project</title>
     <style>
         body { background-color: #000; color: white; text-align: center; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         .stats { padding: 15px; font-size: 22px; background: #1a1a1a; border-bottom: 3px solid #ed1c24; font-weight: bold; }
         .video-wrapper { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; background: #000; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         #balance { color: #00ff00; }
-        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background: #ed1c24; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; }
+        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background-color: #ed1c24; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -27,6 +27,7 @@
         let totalSantim = 0;
         const videoID = 'RoAtML-fDSI'; 
 
+        // Chaje API YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -42,6 +43,7 @@
         }
 
         function onPlayerStateChange(event) {
+            // Lè videyo a fini
             if (event.data == YT.PlayerState.ENDED) {
                 ajouteKredi();
                 document.getElementById('replayBtn').style.display = 'block';
@@ -49,15 +51,17 @@
         }
 
         function ajouteKredi() {
+            // Ajoute 50 santim pou tès la
             totalSantim += 50; 
             let montanFinal = (totalSantim / 100).toFixed(2);
+            
+            // Mizajou nan HTML la
             document.getElementById("balance").innerText = montanFinal;
 
-            // NOU VOYE REZILTA A NAN SKETCHWARE
+            // VOYAJE NAN SKETCHWARE (Jan lòt pwojè yo fè l la)
             if (window.SketchwareInterface) {
-                // Nou voye 2 siyal separe pou nou sèten tou de bwat yo ap ranpli
-                window.SketchwareInterface.voyeKòb("genyen:" + montanFinal);
-                window.SketchwareInterface.voyeKòb("peye:" + montanFinal);
+                // Nou voye valè a dirèkteman san okenn tèks anplis
+                window.SketchwareInterface.voyeKòb(montanFinal);
             }
         }
 
