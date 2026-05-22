@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eroblack Final Project</title>
+    <title>Eroblack Video System</title>
     <style>
-        body { background-color: #000; color: white; text-align: center; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        .stats { padding: 15px; font-size: 22px; background: #1a1a1a; border-bottom: 3px solid #ed1c24; font-weight: bold; }
+        body { background-color: #000; color: white; text-align: center; margin: 0; padding: 0; font-family: sans-serif; }
+        .stats { padding: 15px; font-size: 22px; background: #1a1a1a; border-bottom: 3px solid #00ffff; font-weight: bold; color: #00ffff; }
         .video-wrapper { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; background: #000; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        #balance { color: #00ff00; }
-        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background-color: #ed1c24; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; }
+        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background: linear-gradient(45deg, #0088ff, #0033aa); color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(0, 136, 255, 0.4); }
     </style>
 </head>
 <body>
 
-    <div class="stats">Kredi: <span id="balance">0.00</span> Goud</div>
+    <div class="stats">Kredi: <span id="balance">0.00</span> HTG</div>
 
     <div class="video-wrapper">
         <div id="player"></div>
     </div>
     
-    <button id="replayBtn" onclick="replayVideo()">REPLAY (50 santim ankò)</button>
+    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 50 HTG)</button>
 
     <script>
-        let totalSantim = 0;
+        let totalGoud = 0;
         const videoID = 'RoAtML-fDSI'; 
 
-        // Chaje API YouTube
+        // FONKSYON SENDTOAPP LA (Egzakteman jan l ye nan Roulèt la)
+        function sendToApp(bwat, val) {
+            // Nou eseye de (2) fason yo pou nou sèten li frape Sketchware
+            if (window.Android) { 
+                window.Android.voyeKòb(bwat, val.toString()); 
+            }
+            if (window.SketchwareInterface) {
+                window.SketchwareInterface.voyeKòb(bwat + ":" + val);
+            }
+            console.log("Voye nan " + bwat + ": " + val);
+        }
+
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -43,25 +53,16 @@
         }
 
         function onPlayerStateChange(event) {
-            // Lè videyo a fini
             if (event.data == YT.PlayerState.ENDED) {
-                ajouteKredi();
+                totalGoud += 0.50; // Ajoute 50 santim
+                let rezilta = totalGoud.toFixed(2);
+                
+                document.getElementById("balance").innerText = rezilta;
                 document.getElementById('replayBtn').style.display = 'block';
-            }
-        }
 
-        function ajouteKredi() {
-            // Ajoute 50 santim pou tès la
-            totalSantim += 50; 
-            let montanFinal = (totalSantim / 100).toFixed(2);
-            
-            // Mizajou nan HTML la
-            document.getElementById("balance").innerText = montanFinal;
-
-            // VOYAJE NAN SKETCHWARE (Jan lòt pwojè yo fè l la)
-            if (window.SketchwareInterface) {
-                // Nou voye valè a dirèkteman san okenn tèks anplis
-                window.SketchwareInterface.voyeKòb(montanFinal);
+                // NOU FRAРЕ DE (2) BWAT YO DIRÈKTEMAN
+                sendToApp("peye", rezilta);
+                sendToApp("genyen", rezilta);
             }
         }
 
