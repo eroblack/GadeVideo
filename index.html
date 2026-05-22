@@ -3,36 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eroblack Video System</title>
+    <title>Eroblack Video Lajan</title>
     <style>
-        body { background-color: #000; color: white; text-align: center; margin: 0; padding: 0; font-family: sans-serif; }
-        .stats { padding: 15px; font-size: 22px; background: #1a1a1a; border-bottom: 3px solid #00ffff; font-weight: bold; color: #00ffff; }
-        .video-wrapper { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; background: #000; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        #replayBtn { display: none; margin: 20px auto; padding: 15px 30px; background: linear-gradient(45deg, #0088ff, #0033aa); color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(0, 136, 255, 0.4); }
+        /* Stil jeneral ak gradyan nwa */
+        body { 
+            background: radial-gradient(circle, #021128, #000511); 
+            color: white; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Bwat Enfòmasyon anlè a */
+        .header-info {
+            background: rgba(2, 22, 53, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00ffff;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .header-info h1 {
+            color: #00ffff;
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .header-info p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #b3d9ff;
+        }
+
+        .promo-box {
+            font-size: 12px;
+            color: #ffffff;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px dashed #00ffff;
+            padding: 5px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .contact {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+        /* Kontè Kredi a */
+        .stats {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        /* Videyo */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 150%; /* Ajiste pou wè enfòmasyon yo byen */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            flex-grow: 1;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: none;
+        }
+
+        /* Bouton Replay la */
+        #replayBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #0088ff, #0033aa);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 136, 255, 0.6);
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
-    <div class="stats">Kredi: <span id="balance">0.00</span> HTG</div>
+    <div class="header-info">
+        <h1>EROBLACK</h1>
+        <p>Gade videyo pou fè lajan kach!</p>
+        <div class="stats">Kredi: <span id="balance">0.00</span> HTG</div>
+        <div class="promo-box">
+            Pou piblisite: <span class="contact">eroblack24@gmail.com</span> | <span class="contact">4066-8847</span>
+        </div>
+    </div>
 
     <div class="video-wrapper">
         <div id="player"></div>
     </div>
     
-    <button id="replayBtn" onclick="replayVideo()">REPLAY (Ganyen 1 santim)</button>
+    <button id="replayBtn" onclick="replayVideo()">REPLAY (Fè 1 santim ankò)</button>
 
     <script>
         let totalGoud = 0;
         const videoID = 'RoAtML-fDSI'; 
 
         function sendToApp(bwat, val) {
-            if (window.Android) { 
-                window.Android.voyeKòb(bwat, val.toString()); 
-            }
-            if (window.SketchwareInterface) {
-                window.SketchwareInterface.voyeKòb(bwat + ":" + val);
-            }
+            if (window.Android) { window.Android.voyeKòb(bwat, val.toString()); }
+            if (window.SketchwareInterface) { window.SketchwareInterface.voyeKòb(bwat + ":" + val); }
         }
 
         var tag = document.createElement('script');
@@ -51,22 +141,13 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                // NOU AJOUTE 1 SANTIM (0.01)
                 totalGoud += 0.01; 
-                
-                // Nou itilize toFixed(2) pou asire 0.01, 0.02, elatriye parèt byen
                 let reziltaDisplay = totalGoud.toFixed(2);
-                
                 document.getElementById("balance").innerText = reziltaDisplay;
                 document.getElementById('replayBtn').style.display = 'block';
 
-                // SI KÒB LA RIVE NAN 1.00 (Sa vle di 100 videyo)
-                // Nou voye 1 nan edittextGenyen sèlman
                 if (totalGoud >= 1.00) {
                     sendToApp("genyen", "1");
-                    
-                    // Nou ka reset totalGoud la si nou vle moun nan rekòmanse nan 0
-                    // totalGoud = 0; 
                 }
             }
         }
