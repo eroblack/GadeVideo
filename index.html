@@ -57,18 +57,15 @@
         }
 
         function ajouteKredi() {
-            // NOU METE L SOU 50 SANTIM POU TEST LA
             totalSantim += 50; 
-            
-            // Konvèti an goud (Egzanp: 50 santim = 0.50)
             let montanFinal = (totalSantim / 100).toFixed(2);
-            
             document.getElementById("balance").innerText = montanFinal;
 
-            // VOYAJE NAN SKETCHWARE
+            // NOU VOYE REZILTA A BAY SKETCHWARE
             if (window.SketchwareInterface) {
-                // Sa ap frape edittextGenyen ak edittextPeye
-                SketchwareInterface.voyeKòb(montanFinal);
+                // Nou voye yon mesaj ki di se pou tou de bwat yo
+                // Nou itilize fòma "test:montan" pou Sketchware ka separe l
+                window.SketchwareInterface.voyeKòb("tout:" + montanFinal);
             }
         }
 
