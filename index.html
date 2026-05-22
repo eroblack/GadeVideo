@@ -1,52 +1,89 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mon Site Web</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(120deg, #4facfe, #00f2fe);
-      color: #fff;
-      text-align: center;
-    }
-    header {
-      padding: 50px 20px;
-    }
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 18px;
-      opacity: 0.9;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #fff;
-      color: #333;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      font-size: 14px;
-      opacity: 0.8;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background-color: #000; color: white; text-align: center; font-family: sans-serif; margin: 0; }
+        .video-container { width: 100vw; height: 80vh; background: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
+        .stats { padding: 10px; background: #222; }
+        button { 
+            padding: 15px 30px; font-size: 18px; margin-top: 10px; 
+            background: #28a745; color: white; border: none; border-radius: 5px; 
+            cursor: pointer;
+        }
+        button:disabled { background: #555; }
+    </style>
 </head>
-<body>  <header>
-    <h1>Byenveni sou sit mwen</h1>
-    <p>Mwen kreye sit sa ak HTML + CSS</p>
-    <a class="btn" href="#">Klike la</a>
-  </header>  <footer>
-    © 2026 - Sit pèsonèl mwen
-  </footer></body>
+<body>
+
+<div class="video-container">
+    <iframe id="myVideo" src="https://streamable.com/e/za8zmt?autoplay=1&nocontrols=1" allow="autoplay"></iframe>
+</div>
+
+<div class="stats">
+    <p>Santim: <span id="displayCentime">0</span>/100</p>
+    <button id="btnPlay" onclick="restartVideo()">Replay pou genyen</button>
+</div>
+
+<script>
+    let centimes = 0;
+    let videoFinished = false;
+    const iframe = document.getElementById('myVideo');
+    const btnPlay = document.getElementById('btnPlay');
+    const display = document.getElementById('displayCentime');
+
+    // Fonksyon pou koute lè videyo a fini
+    // Remak: Streamable voye mesaj via postMessage
+    window.addEventListener('message', function(event) {
+        // Nou tcheke si mesaj la di videyo a fini
+        if (event.data === 'onVideoComplete' || (event.data.method === 'onVideoComplete')) {
+            processReward();
+        }
+    });
+
+    // simulation si iframe la pa voye mesaj la dirèkteman (fallback)
+    // Nan anpil aplikasyon WebView, nou ka detekte sa pi byen toujou
+    function processReward() {
+        if (!videoFinished) {
+            centimes++;
+            videoFinished = true;
+            btnPlay.disabled = false; // Moun nan ka klike sou play kounye a
+            
+            updateSystem();
+        }
+    }
+
+    function updateSystem() {
+        display.innerText = centimes;
+
+        // 1. Mete santim nan nan edittextGenyen (via Android Interface si w nan Sketchware)
+        if(window.Android) {
+            window.Android.updateGenyen(centimes);
+        }
+
+        // 2. Si li rive 100, li fè 1 Goud, li voye l nan Peye
+        if (centimes >= 100) {
+            centimes = 0;
+            display.innerText = "0";
+            if(window.Android) {
+                window.Android.transferToPeye(1);
+            } else {
+                alert("Ou fè 1 Goud! Sistèm nan voye l nan balans Peye ou.");
+            }
+        }
+    }
+
+    function restartVideo() {
+        // Reload iframe la pou l ka jwe ankò
+        const currentSrc = iframe.src;
+        iframe.src = "";
+        iframe.src = currentSrc;
+        
+        videoFinished = false;
+        btnPlay.disabled = true; // Bloke bouton an pandan l ap gade
+    }
+</script>
+
+</body>
 </html>
