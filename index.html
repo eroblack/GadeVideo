@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eroblack Video Lajan</title>
     <style>
-        /* Stil jeneral Gaming Cyberpunk */
         body { 
             background: radial-gradient(circle, #021128, #000511); 
             color: white; 
@@ -20,9 +19,7 @@
             position: relative;
         }
 
-        /* --- Seksyon HUD (Heads-Up Display) --- */
-
-        /* Nivo Lajan / Kredi (Kwen Anwo Gòch) */
+        /* Nivo Lajan (Kwen Anwo Gòch) */
         .game-stats {
             position: absolute;
             top: 15px;
@@ -45,17 +42,17 @@
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* Ti Ba Enfòmasyon ki monte plis toujou (anviwon 1.5 cm depi anba) */
+        /* Ti Ba Enfòmasyon (Monte nan 80px pou l pa kache pa ba navigasyon Tecno a) */
         .game-ticker {
             position: absolute;
-            bottom: 60px; /* Nou monte l pi wo pou l kite espas 1.5cm anba a */
+            bottom: 80px; 
             left: 5%;
             width: 90%; 
             background: rgba(2, 22, 53, 0.6);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(0, 255, 255, 0.4);
             border-radius: 20px; 
-            padding: 4px 0; 
+            padding: 5px 0; 
             z-index: 100;
             font-size: 11px; 
             color: #00ffff;
@@ -71,7 +68,7 @@
             animation: ticker 18s linear infinite; 
         }
 
-        /* --- Seksyon Videyo --- */
+        /* Videyo */
         .video-wrapper {
             position: absolute;
             top: 0;
@@ -87,11 +84,11 @@
             border: none;
         }
 
-        /* Bouton Replay Game Style */
+        /* Bouton Replay (Monte nan 130px pou l pi wo pase tout bagay) */
         #replayBtn {
             display: none;
             position: absolute;
-            bottom: 110px; /* Nou monte bouton an tou pou l pa monte sou ti ba a */
+            bottom: 130px; 
             left: 50%;
             transform: translateX(-50%);
             padding: 15px 40px;
@@ -113,7 +110,6 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
         }
 
-        /* Animasyon pou ticker la */
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
@@ -122,18 +118,15 @@
 </head>
 <body>
 
-    <!-- HUD Netwaye (Kredi sèlman ki rete anlè) -->
     <div class="game-stats">
         KREDI / WALLET
         <span id="balance">0.00</span> HTG
     </div>
 
-    <!-- Ti ba enstriksyon ki monte a -->
     <div class="game-ticker">
         <div class="ticker-text">• Gade videyo a nèt pou w ka genyen kach! • REPLAY ap ba w plis avantaj • Jwèt la kòmanse! •</div>
     </div>
 
-    <!-- Videyo an background -->
     <div class="video-wrapper">
         <div id="player"></div>
     </div>
