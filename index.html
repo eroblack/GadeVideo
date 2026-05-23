@@ -42,7 +42,7 @@
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* Ti Ba Enfòmasyon (Monte nan 80px) */
+        /* Ti Ba Enfòmasyon */
         .game-ticker {
             position: absolute;
             bottom: 80px; 
@@ -107,10 +107,7 @@
 
     <script>
         let totalGoud = 0;
-
-        // ID videyo YouTube Shorts ou a la
-        const videoID =
-'BlJUFpQLPJY'; 
+        const videoID = 'BlJUFpQLPJY'; 
 
         function sendToApp(bwat, val) {
             if (window.Android) { window.Android.voyeKòb(bwat, val.toString()); }
@@ -133,16 +130,24 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
+                // Chak fwa yon videyo fini, li monte 0.01 goud (1 santim)
                 totalGoud += 0.01; 
+                
+                // Mete chif la sou fòm de desimal (egz: 0.01, 0.02...)
                 let reziltaDisplay = totalGoud.toFixed(2);
                 document.getElementById("balance").innerText = reziltaDisplay;
 
+                // Si santim yo rive 100 (ki vle di totalGoud >= 1.00 HTG)
                 if (totalGoud >= 1.00) {
+                    // 1. Voye siyal 1 goud la bay Sketchware
                     sendToApp("genyen", "1");
+                    
+                    // 2. Reyisyalize kontè a a zewo pou l ka rekòmanse
+                    totalGoud = 0;
+                    
+                    // 3. Chanje afichaj ekran an pou l tounen 0.00 rapidman
+                    document.getElementById("balance").innerText = "0.00";
                 }
-                
-                // Kòmand pou l te jwe pou kont li a retire nèt la. 
-                // Videyo a ap kanpe epi moun nan ap klike sou li poukont li pou l REPLAY.
             }
         }
     </script>
