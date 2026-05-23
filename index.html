@@ -42,7 +42,7 @@
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* Ti Ba Enfòmasyon (Monte nan 80px pou l pa kache pa ba navigasyon Tecno a) */
+        /* Ti Ba Enfòmasyon (Monte nan 80px) */
         .game-ticker {
             position: absolute;
             bottom: 80px; 
@@ -65,7 +65,7 @@
         .ticker-text {
             display: inline-block;
             padding-left: 100%;
-            animation: ticker 18s linear infinite; 
+            animation: ticker 25s linear infinite; /* Ajiste vitès pou tèks ki pi long */
         }
 
         /* Videyo */
@@ -84,7 +84,7 @@
             border: none;
         }
 
-        /* Bouton Replay (Monte nan 130px pou l pi wo pase tout bagay) */
+        /* Bouton Replay - MODIFIE: Dyalòg Wouj, Tèks Blan */
         #replayBtn {
             display: none;
             position: absolute;
@@ -92,22 +92,22 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 15px 40px;
-            background: linear-gradient(45deg, #ff0055, #990033);
-            color: white;
+            background: linear-gradient(45deg, #ff3333, #aa0000); /* Dyalòg Wouj */
+            color: white; /* Tèks Blan */
             border: 2px solid #ffffff;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            box-shadow: 0 0 20px rgba(255, 50, 50, 0.6);
             z-index: 105;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.2s;
         }
         #replayBtn:hover {
-            background: linear-gradient(45deg, #00ff00, #008800);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            background: linear-gradient(45deg, #ff6666, #cc0000);
+            box-shadow: 0 0 20px rgba(255, 100, 100, 0.8);
         }
 
         @keyframes ticker {
@@ -123,15 +123,17 @@
         <span id="balance">0.00</span> HTG
     </div>
 
+    <!-- Ti ba enstriksyon - MODIFIE: Tèks ak EROBLACK ak Imel -->
     <div class="game-ticker">
-        <div class="ticker-text">• Gade videyo a nèt pou w ka genyen kach! • REPLAY ap ba w plis avantaj • Jwèt la kòmanse! •</div>
+        <div class="ticker-text">• Konte sou EROBLACK pou pi bon eksperyans! • Gade videyo a nèt pou w ka genyen kach! • Pou sipò oswa kesyon, imel nou nan: eroblack24@gmail.com • REPLAY ap ba w plis avantaj •</div>
     </div>
 
     <div class="video-wrapper">
         <div id="player"></div>
     </div>
     
-    <button id="replayBtn" onclick="replayVideo()">NEXT ROUND (Fè 1 santim ankò)</button>
+    <!-- Bouton Replay - MODIFIE: Tèks senplifye -->
+    <button id="replayBtn" onclick="replayVideo()">NEXT ROUND</button>
 
     <script>
         let totalGoud = 0;
@@ -171,6 +173,7 @@
 
         function replayVideo() {
             player.playVideo();
+            // Lè moun nan replay videyo a, bouton an efase (kache)
             document.getElementById('replayBtn').style.display = 'none';
         }
     </script>
