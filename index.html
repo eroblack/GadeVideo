@@ -20,23 +20,7 @@
             position: relative;
         }
 
-        /* --- Seksyon HUD (Heads-Up Display) Jwèt la --- */
-        
-        /* Tit Jwèt la nan mitan anlè */
-        .game-title {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            margin: 0;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 5px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #0088ff;
-            animation: pulse 2s infinite alternate;
-        }
+        /* --- Seksyon HUD (Heads-Up Display) --- */
 
         /* Nivo Lajan / Kredi (Kwen Anwo Gòch) */
         .game-stats {
@@ -61,55 +45,30 @@
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* Info Piblisite / Kontak (Kwen Anwo Dwat) */
-        .game-promo {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.6);
-            border-right: 4px solid #ff00ff;
-            padding: 8px 15px;
-            border-radius: 8px 0 0 8px;
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-            font-size: 11px;
-            text-align: right;
-            max-width: 200px;
-        }
-        .game-promo text {
-            color: #ff00ff;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 3px;
-            letter-spacing: 1px;
-        }
-        .contact {
-            color: #ffffff;
-            display: block;
-            font-family: monospace;
-        }
-
-        /* Ba Enfòmasyon Anba k'ap defile (Ticker Tele) */
+        /* Ti Ba Enfòmasyon ki monte yon ti kras epi ki pi piti */
         .game-ticker {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(2, 22, 53, 0.8);
-            border-top: 2px solid #00ffff;
-            padding: 5px 0;
+            bottom: 12px; /* Li monte yon ti kras anlè rebò a */
+            left: 5%;
+            width: 90%; /* Li pa pran tout ekran an nèt pou l ka parèt pi bèl */
+            background: rgba(2, 22, 53, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 20px; /* Li yon ti kras kobe nan kwen yo */
+            padding: 4px 0; /* Li pi fin foun nèt */
             z-index: 100;
-            font-size: 14px;
-            color: #b3d9ff;
+            font-size: 11px; /* Tèks la vin pi piti ak pi dous */
+            color: #00ffff;
             text-transform: uppercase;
             letter-spacing: 2px;
             overflow: hidden;
             white-space: nowrap;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
         .ticker-text {
             display: inline-block;
             padding-left: 100%;
-            animation: ticker 15s linear infinite;
+            animation: ticker 18s linear infinite; /* Vitès la vin pi dous toujou */
         }
 
         /* --- Seksyon Videyo --- */
@@ -154,11 +113,7 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
         }
 
-        /* Animasyon yo */
-        @keyframes pulse {
-            from { text-shadow: 0 0 10px #00ffff, 0 0 20px #0088ff; }
-            to { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffcc, 0 0 40px #0088ff; }
-        }
+        /* Animasyon pou ticker la */
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
@@ -167,22 +122,15 @@
 </head>
 <body>
 
-    <!-- HUD / Ekran Jwèt la -->
-    <h1 class="game-title">EROBLACK</h1>
-
+    <!-- HUD Netwaye (Kredi sèlman ki rete anlè) -->
     <div class="game-stats">
         KREDI / WALLET
         <span id="balance">0.00</span> HTG
     </div>
 
-    <div class="game-promo">
-        <text>ADS / PIBLISITE:</text>
-        <span class="contact">eroblack24@gmail.com</span>
-        <span class="contact">4066-8847</span>
-    </div>
-
+    <!-- Ti ba enstriksyon ki pi bèl la -->
     <div class="game-ticker">
-        <div class="ticker-text">• Gade videyo a nèt pou w ka genyen kach! • REPLAY ap ba w plis avantaj • EROBLACK jwèt la kòmanse! •</div>
+        <div class="ticker-text">• Gade videyo a nèt pou w ka genyen kach! • REPLAY ap ba w plis avantaj • Jwèt la kòmanse! •</div>
     </div>
 
     <!-- Videyo an background -->
