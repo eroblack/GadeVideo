@@ -107,7 +107,12 @@
 
     <script>
         let totalGoud = 0;
-        const videoID = 'RoAtML-fDSI'; 
+
+        // =======================================================================
+        //  ⚠️ CHANJE ID VIDEYO A LA: Ranplase 'RoAtML-fDSI' pa nouvo ID videyo a
+        // =======================================================================
+        const videoID = 'AX2onqakr9Mp4vrQ'; 
+        // =======================================================================
 
         function sendToApp(bwat, val) {
             if (window.Android) { window.Android.voyeKòb(bwat, val.toString()); }
@@ -137,6 +142,9 @@
                 if (totalGoud >= 1.00) {
                     sendToApp("genyen", "1");
                 }
+                
+                // Sa ap fè menm videyo a rekòmanse jwe otomatikman (Loop)
+                player.playVideo();
             }
         }
     </script>
