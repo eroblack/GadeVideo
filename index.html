@@ -106,7 +106,6 @@
     </div>
 
     <script>
-        let totalGoud = 0;
         const videoID = 'mtsXI56tQmk'; 
 
         function sendToApp(bwat, val) {
@@ -130,24 +129,16 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                // Chak fwa yon videyo fini, li monte 0.01 goud (1 santim)
-                totalGoud += 0.01; 
-                
-                // Mete chif la sou fòm de desimal (egz: 0.01, 0.02...)
-                let reziltaDisplay = totalGoud.toFixed(2);
-                document.getElementById("balance").innerText = reziltaDisplay;
+                // 1. Montre 0.01 sou ekran HTML la pou yo wè yo genyen
+                document.getElementById("balance").innerText = "0.01";
 
-                // Si santim yo rive 100 (ki vle di totalGoud >= 1.00 HTG)
-                if (totalGoud >= 1.00) {
-                    // 1. Voye siyal 1 goud la bay Sketchware
-                    sendToApp("genyen", "1");
-                    
-                    // 2. Reyisyalize kontè a a zewo pou l ka rekòmanse
-                    totalGoud = 0;
-                    
-                    // 3. Chanje afichaj ekran an pou l tounen 0.00 rapidman
+                // 2. Voye "0.01" bay Sketchware nan bwat "genyen" pou edittextGenyen ou an ka resevwa l
+                sendToApp("genyen", "0.01");
+                
+                // 3. Apre 1 segonn (1000ms), remete kontè HTML la a 0.00 pou pwochen replay la
+                setTimeout(function() {
                     document.getElementById("balance").innerText = "0.00";
-                }
+                }, 1000);
             }
         }
     </script>
